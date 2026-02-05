@@ -1,7 +1,7 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-#include <stddef.h>
+#include <stdlib.h>
 struct Vector {
     int* data;
     int size;
@@ -9,6 +9,14 @@ struct Vector {
 };
 
 typedef struct Vector Vector;
+
+static inline void add_component(Vector* vec, int size, int capacity)
+{
+    vec->size = size;
+    vec->capacity = capacity;
+    vec->data = (int*)calloc(vec->capacity, sizeof(int));
+}
+
 void vector_init(Vector* vec, size_t size, size_t capacity);
 // void vector_resize();
 void vector_add(Vector* vec, const int value);

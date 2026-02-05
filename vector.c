@@ -24,6 +24,7 @@ void vector_add(Vector* vec, const int value)
 {
     if (!vec)
         err(errno, "Failed Reallocation Memory");
+
     if (vec->size >= vec->capacity)
         grow_capacity(vec);
 
@@ -75,11 +76,7 @@ void vector_init(Vector* vec, size_t size, size_t capacity)
         err(errno, "Failed Reallocation Memory");
         exit(1);
     }
-
-    vec->data = (int*)calloc(capacity, sizeof(int*));
-    vec->capacity = capacity;
-    vec->size = size;
-
+    add_component(vec, size, capacity);
     if (!vec->data)
         free(vec);
 
@@ -94,9 +91,7 @@ Vector* create_vector(int size, int capacity)
         return NULL;
     }
 
-    vec->size = size;
-    vec->capacity = capacity;
-    vec->data = (int*)calloc(vec->capacity, sizeof(int));
+    add_component(vec, size, capacity);
 
     if (!vec->data) {
         free(vec);
