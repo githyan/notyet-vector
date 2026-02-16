@@ -8,7 +8,7 @@ VFLAGS = --leak-check=full --show-leak-kinds=all
 
 TESTFLAGS = -fprofile-arcs -ftest-coverage
 TEST_SRC = unittest/test.c vector.c
-TEST_OBJ = test test-test.gcno test-vector.gcno
+TEST_OBJ = test test-test.gcno test-vector.gcno test-test.gcda test-vector.gcda
 
 all: $(TARGET)
 	$(CC) $(CFLAGS) $(CDEBUGS) $(SRC) -o $(TARGET)
@@ -19,7 +19,7 @@ valgrind:
 	valgrind ${VFLAGS} ./${TARGET}
 
 build_test: unittest/test.c vector.c
-	$(CC) -Os -g $(TESTFLAGS) -o test $(TEST_SRC)
+	$(CC) $(CFLAGS) $(CDEBUGS) $(TESTFLAGS) -o test $(TEST_SRC)
 
 test: build_test
 	./test
